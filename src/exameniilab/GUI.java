@@ -25,14 +25,14 @@ import javax.swing.JTextField;
  * @author josuc
  */
 public class GUI {
-    private PSNUsers psnUsers;
+    private PSNUsers USERS;
     private JFrame frame;
-    private JTextField usernameField, trophyGameField, trophyNameField;
-    private JComboBox<Trophy> trophyTypeBox;
+    private JTextField txtuser, txtGame, txtName;
+    private JComboBox<Trophy> ComboBox;
     private JTextArea infoArea;
 
     public GUI() throws IOException {
-        psnUsers = new PSNUsers();
+        USERS = new PSNUsers();
         frame = new JFrame("PSN");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
@@ -46,17 +46,17 @@ public class GUI {
         userLabel.setBounds(10, 10, 80, 25);
         panel.add(userLabel);
 
-        usernameField = new JTextField(20);
-        usernameField.setBounds(100, 10, 160, 25);
-        panel.add(usernameField);
+        txtuser = new JTextField(20);
+        txtuser.setBounds(100, 10, 160, 25);
+        panel.add(txtuser);
 
         JButton addButton = new JButton("Add User");
         addButton.setBounds(10, 40, 100, 25);
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
+                String username = txtuser.getText();
                 try {
-                    psnUsers.addUser(username);                                        
+                    USERS.addUser(username);                                        
                 } catch (IOException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -68,9 +68,9 @@ public class GUI {
         deactivateButton.setBounds(120, 40, 140, 25);
         deactivateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
+                String username = txtuser.getText();
                 try {
-                    psnUsers.deactivateUser(username);
+                    USERS.deactivateUser(username);
                 } catch (IOException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -82,36 +82,36 @@ public class GUI {
         trophyGameLabel.setBounds(10, 70, 80, 25);
         panel.add(trophyGameLabel);
 
-        trophyGameField = new JTextField(20);
-        trophyGameField.setBounds(120, 70, 160, 25);
-        panel.add(trophyGameField);
+        txtGame = new JTextField(20);
+        txtGame.setBounds(120, 70, 160, 25);
+        panel.add(txtGame);
 
         JLabel trophyNameLabel = new JLabel("Nombre Trofeo");
         trophyNameLabel.setBounds(10, 100, 100, 25);
         panel.add(trophyNameLabel);
 
-        trophyNameField = new JTextField(20);
-        trophyNameField.setBounds(120, 100, 160, 25);
-        panel.add(trophyNameField);
+        txtName = new JTextField(20);
+        txtName.setBounds(120, 100, 160, 25);
+        panel.add(txtName);
 
         JLabel trophyTypeLabel = new JLabel("Tipo Trofeo");
         trophyTypeLabel.setBounds(10, 130, 80, 25);
         panel.add(trophyTypeLabel);
 
-        trophyTypeBox = new JComboBox<>(Trophy.values());
-        trophyTypeBox.setBounds(120, 130, 160, 25);
-        panel.add(trophyTypeBox);
+        ComboBox = new JComboBox<>(Trophy.values());
+        ComboBox.setBounds(120, 130, 160, 25);
+        panel.add(ComboBox);
 
         JButton addTrophyButton = new JButton("Agregar Trofeo");
         addTrophyButton.setBounds(10, 160, 120, 25);
         addTrophyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String trophyGame = trophyGameField.getText();
-                String trophyName = trophyNameField.getText();
-                Trophy type = (Trophy)trophyTypeBox.getSelectedItem();
+                String username = txtuser.getText();
+                String trophyGame = txtGame.getText();
+                String trophyName = txtName.getText();
+                Trophy type = (Trophy)ComboBox.getSelectedItem();
                 try {
-                    psnUsers.addTrophieTo(username, trophyGame, trophyName, type);
+                    USERS.addTrophieTo(username, trophyGame, trophyName, type);
                 } catch (IOException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -123,10 +123,10 @@ public class GUI {
         searchButton.setBounds(270, 40, 130, 25);
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
+                String username = txtuser.getText();
                 String info = "";
                 try {
-                    info = psnUsers.playerInfo(username);
+                    info = USERS.playerInfo(username);
                 } catch (IOException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
