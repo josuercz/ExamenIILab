@@ -28,9 +28,7 @@ public class PSNUsers {
         raf.seek(0);
         while (raf.getFilePointer() < raf.length()) {
             String username = raf.readUTF();
-            raf.readInt();
-            raf.readInt();
-            raf.readBoolean();
+            raf.skipBytes(9);
             long pos = raf.getFilePointer();
             users.add(username, pos);
         }
@@ -39,8 +37,12 @@ public class PSNUsers {
     public void addUser(String username) throws IOException {
         raf.seek(raf.length());
         raf.writeUTF(username);
-        raf.writeInt(0); // points
-        raf.writeInt(0); // trophies
+        int puntosIniciales = 0;
+        raf.writeInt(puntosIniciales); // points
+        System.out.println("Puntos " + puntosIniciales);
+        int trofeosIniciales = 0;
+        raf.writeInt(trofeosIniciales); // trophies
+        System.out.println("Trofeos " + trofeosIniciales);
         raf.writeBoolean(true); // active
         users.add(username, raf.getFilePointer());
     }
@@ -62,8 +64,10 @@ public class PSNUsers {
             int points = raf.readInt();
             int trophies = raf.readInt();
             points += type.points;
-            trophies++;
-            raf.seek(pos);
+            System.out.println("Puntos" + points);
+            trophies++;            
+            System.out.println("Trofeos" + trophies);
+            raf.seek(pos - 9);
             raf.writeInt(points);
             raf.writeInt(trophies);
 
@@ -84,10 +88,12 @@ public class PSNUsers {
         long pos = users.Search(username);
         StringBuilder info = new StringBuilder();
         if (pos != -1) {
-            raf.seek(pos - username.length() - 2); // 2 bytes for UTF string length
+            raf.seek(pos - 9 - username.length() - 2); // 2 bytes for UTF string length
             info.append("Username: " + raf.readUTF() + "\n");
             info.append("Points: " + raf.readInt() + "\n");
-            info.append("Trophies: " + raf.readInt() + "\n");
+            int trophies = raf.readInt();
+            info.append("Trophies: " + trophies + "\n");
+            System.out.println("Trphies: " + trophies);
             info.append("Active: " + raf.readBoolean() + "\n");
 
             // print trophies

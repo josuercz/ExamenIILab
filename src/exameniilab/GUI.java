@@ -34,6 +34,7 @@ public class GUI {
         frame = new JFrame("PSN Users");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
+        frame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         frame.add(panel);
