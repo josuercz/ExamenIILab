@@ -44,9 +44,8 @@ public class HashTable {
     public long Search(String username) {
         Entry temp = head;
         while (temp != null) {
-            if (temp.username.equals(username)) {
-                return temp.posicion;
-            }
+            if (temp.username.equals(username)) 
+                return temp.posicion;            
             temp = temp.siguiente;
         }
         return -1;

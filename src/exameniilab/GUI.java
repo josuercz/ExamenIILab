@@ -5,6 +5,7 @@
 package exameniilab;
 
 import exameniilab.HashTable.Trophy;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -31,19 +33,13 @@ public class GUI {
 
     public GUI() throws IOException {
         psnUsers = new PSNUsers();
-        frame = new JFrame("PSN Users");
+        frame = new JFrame("PSN");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         frame.add(panel);
-        placeComponents(panel);
-
-        frame.setVisible(true);
-    }
-
-    private void placeComponents(JPanel panel) {
         panel.setLayout(null);
 
         JLabel userLabel = new JLabel("Username");
@@ -60,7 +56,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 try {
-                    psnUsers.addUser(username);
+                    psnUsers.addUser(username);                                        
                 } catch (IOException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -82,32 +78,32 @@ public class GUI {
         });
         panel.add(deactivateButton);
 
-        JLabel trophyGameLabel = new JLabel("Trophy Game");
+        JLabel trophyGameLabel = new JLabel("Juego");
         trophyGameLabel.setBounds(10, 70, 80, 25);
         panel.add(trophyGameLabel);
 
         trophyGameField = new JTextField(20);
-        trophyGameField.setBounds(100, 70, 160, 25);
+        trophyGameField.setBounds(120, 70, 160, 25);
         panel.add(trophyGameField);
 
-        JLabel trophyNameLabel = new JLabel("Trophy Name");
-        trophyNameLabel.setBounds(10, 100, 80, 25);
+        JLabel trophyNameLabel = new JLabel("Nombre Trofeo");
+        trophyNameLabel.setBounds(10, 100, 100, 25);
         panel.add(trophyNameLabel);
 
         trophyNameField = new JTextField(20);
-        trophyNameField.setBounds(100, 100, 160, 25);
+        trophyNameField.setBounds(120, 100, 160, 25);
         panel.add(trophyNameField);
 
-        JLabel trophyTypeLabel = new JLabel("Trophy Type");
+        JLabel trophyTypeLabel = new JLabel("Tipo Trofeo");
         trophyTypeLabel.setBounds(10, 130, 80, 25);
         panel.add(trophyTypeLabel);
 
         trophyTypeBox = new JComboBox<>(Trophy.values());
-        trophyTypeBox.setBounds(100, 130, 160, 25);
+        trophyTypeBox.setBounds(120, 130, 160, 25);
         panel.add(trophyTypeBox);
 
-        JButton addTrophyButton = new JButton("Add Trophy");
-        addTrophyButton.setBounds(10, 160, 100, 25);
+        JButton addTrophyButton = new JButton("Agregar Trofeo");
+        addTrophyButton.setBounds(10, 160, 120, 25);
         addTrophyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
@@ -124,7 +120,7 @@ public class GUI {
         panel.add(addTrophyButton);
 
         JButton searchButton = new JButton("Search User");
-        searchButton.setBounds(10, 190, 130, 25);
+        searchButton.setBounds(270, 40, 130, 25);
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
@@ -140,9 +136,15 @@ public class GUI {
         
 	panel.add(searchButton);
 
-	infoArea = new JTextArea();
-	infoArea.setBounds(10,220 ,460 ,230 );
-	infoArea.setEditable(false);
-	panel.add(infoArea);	
+        infoArea = new JTextArea();
+        infoArea.setBounds(10,200 ,460 ,250 );
+        infoArea.setEditable(false);
+        infoArea.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        JScrollPane scrollPane = new JScrollPane(infoArea);
+        scrollPane.setBounds(10,200 ,460 ,250 );
+        panel.add(scrollPane);	
+
+        frame.setVisible(true);
     }
 }
