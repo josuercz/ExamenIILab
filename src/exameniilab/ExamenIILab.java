@@ -4,6 +4,10 @@
  */
 package exameniilab;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author josuc
@@ -14,7 +18,12 @@ public class ExamenIILab {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            // TODO code application logic here
+            new GUI();
+        } catch (IOException ex) {
+            Logger.getLogger(ExamenIILab.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
