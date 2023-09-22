@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,13 +35,30 @@ public class PSNUsers {
         }
     }
     
-    public void addUser(String username) throws IOException {
-        raf.seek(raf.length());
-        raf.writeUTF(username);
-        raf.writeInt(0); 
-        raf.writeInt(0);
-        raf.writeBoolean(true);
-        users.add(username, raf.getFilePointer());
+    public boolean buscarUser(String username) throws IOException {
+        raf.seek(0);
+        while (raf.getFilePointer() < raf.length()) {
+            String user = raf.readUTF();
+            raf.readInt();
+            raf.readInt();
+            raf.readBoolean();
+            if (user.equals(username))
+                return true;
+        }
+        return false;
+    }
+    
+    public void addUser(String username) throws IOException {                
+        if (buscarUser(username))
+            JOptionPane.showMessageDialog(null, "Usuario ya existe");
+        else {
+            raf.seek(raf.length());
+            raf.writeUTF(username);
+            raf.writeInt(0); 
+            raf.writeInt(0);
+            raf.writeBoolean(true);
+            users.add(username, raf.getFilePointer());
+        }
     }
 
     public void deactivateUser(String username) throws IOException {
